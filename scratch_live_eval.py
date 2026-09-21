@@ -48,7 +48,7 @@ for s in scenarios:
     t0 = time.time()
     payload = json.dumps({"features": s["features"]}).encode("utf-8")
     req = urllib.request.Request(
-        "http://127.0.0.1:8000/predict",
+        "http://13.204.45.144:8000/predict",
         data=payload,
         headers={"Content-Type": "application/json"}
     )

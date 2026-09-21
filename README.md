@@ -134,7 +134,7 @@ uvicorn backend.main:app --reload
 The backend will run at:
 
 ```text
-http://127.0.0.1:8000
+http://13.204.45.144:8000
 ```
 
 ### 5. Start the frontend
@@ -161,7 +161,7 @@ The frontend will run at the local URL provided by Vite.
 Interactive API documentation is available at:
 
 ```text
-http://127.0.0.1:8000/docs
+http://13.204.45.144:8000/docs
 ```
 
 ## Important Note
