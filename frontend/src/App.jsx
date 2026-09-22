@@ -561,12 +561,12 @@ export default function App() {
               <div className={`pulse-dot ${backendStatus === 'online' ? 'green' : 'red'}`} />
               <span>
                 {backendStatus === 'online'
-                  ? `API Live (13.204.45.144:8000 ${latency ? `• ${latency}ms` : ''})`
-                  : 'API Offline (13.204.45.144:8000)'}
+                  ? `API Live (HTTPS ${latency ? `• ${latency}ms` : ''})`
+                  : 'API Offline (HTTPS)'}
               </span>
             </button>
           </div>
-        </div>
+        </div>  
       </header>
 
       {/* Main Container */}
@@ -580,7 +580,7 @@ export default function App() {
                 <line x1="12" y1="16" x2="12.01" y2="16" />
               </svg>
               <span>
-                <strong>FastAPI backend is offline or disconnected.</strong> Ensure server is running at <code>http://13.204.45.144:8000</code>.
+                <strong>FastAPI backend is offline or disconnected.</strong> Ensure server is running at <code>https://15-252-191-202.nip.io</code>.
               </span>
             </div>
             <button onClick={checkBackendHealth} className="pipeline-retry-btn">
