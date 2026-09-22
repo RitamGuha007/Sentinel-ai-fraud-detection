@@ -244,10 +244,10 @@ def predict_fraud(transaction: TransactionData):
     }
 @app.post("/predict-csv")
 async def predict_csv(file: UploadFile = File(...)):
-    # Read uploaded CSV file
-    contents = await file.read()
-    data = pd.read_csv(io.BytesIO(contents))
-    data = data.head(100)
+    # Read only the first 100 rows from the uploaded CSV
+    data = pd.read_csv(file.file, nrows=100)
+    
+    
 
     # Check whether all required features exist
     missing_columns = [
