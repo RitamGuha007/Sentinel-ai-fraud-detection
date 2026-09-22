@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
 
-const API_BASE_URL = 'http://13.204.45.144:8000';
+const API_BASE_URL = 'https://15-252-191-202.nip.io';
 
 // Verified real dataset presets from model/creditcard.csv
 const PRESETS = [
