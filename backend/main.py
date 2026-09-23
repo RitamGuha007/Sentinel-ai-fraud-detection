@@ -102,7 +102,11 @@ FEATURE_NAMES = [
 
 class TransactionData(BaseModel):
     features: list[float]
-
+class RiskExplanationRequest(BaseModel):
+    fraud_probability: float
+    prediction: int
+    result: str
+    risk_level: str
 
 # ==========================================
 # Save prediction to SQLite database
@@ -286,3 +290,37 @@ async def predict_csv(file: UploadFile = File(...)):
         "total_transactions": len(results),
         "results": results
     }    
+# ==========================================
+# Mock AI Risk Explanation Endpoint
+# ==========================================
+
+@app.post("/explain-risk")
+def explain_risk(request: RiskExplanationRequest):
+
+    if request.risk_level == "High":
+        explanation = (
+            "The transaction has been classified as high risk "
+            "by the fraud detection model. Further verification "
+            "is recommended before approving the transaction."
+        )
+
+    elif request.risk_level == "Medium":
+        explanation = (
+            "The transaction has been classified as medium risk. "
+            "Additional monitoring and verification may be appropriate."
+        )
+
+    else:
+        explanation = (
+            "The transaction has been classified as low risk "
+            "by the fraud detection model. Normal monitoring is recommended."
+        )
+
+    return {
+        "fraud_probability": request.fraud_probability,
+        "prediction": request.prediction,
+        "result": request.result,
+        "risk_level": request.risk_level,
+        "explanation": explanation,
+        "source": "Mock explanation for development"
+    }

@@ -98,6 +98,11 @@ export default function App() {
   const [prediction, setPrediction] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
 
+  // Risk explanation state
+  const [riskExplanation, setRiskExplanation] = useState(null);
+  const [explanationLoading, setExplanationLoading] = useState(false);
+  const [explanationError, setExplanationError] = useState(null);
+
   // History state
   const [history, setHistory] = useState([]);
   const [csvFile, setCsvFile] = useState(null);
@@ -229,7 +234,40 @@ export default function App() {
     updated[index] = isNaN(num) ? 0.0 : num;
     setVFeatures(updated);
   };
+  const fetchRiskExplanation = async (predictionData) => {
+    setExplanationLoading(true);
+    setExplanationError(null);
+    setRiskExplanation(null);
 
+    try {
+      const response = await fetch(`${API_BASE_URL}/explain-risk`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          fraud_probability: predictionData.fraud_probability,
+          prediction: predictionData.prediction,
+          result: predictionData.result,
+          risk_level: predictionData.risk_level,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch risk explanation');
+      }
+
+      const data = await response.json();
+
+      setRiskExplanation(data);
+    } catch (error) {
+      console.error('Risk explanation error:', error);
+      setExplanationError(error.message);
+    } finally {
+      setExplanationLoading(false);
+    }
+  };
+  
   const constructPayload = () => {
     return [
       parseFloat(timeVal) || 0.0,
@@ -258,8 +296,9 @@ export default function App() {
 
       const data = await response.json();
       setPrediction(data);
+      fetchRiskExplanation(data);
       setBackendStatus('online');
-
+      
       setHistory((prev) => [
         {
           id: Date.now(),
