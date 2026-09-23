@@ -1079,7 +1079,37 @@ export default function App() {
                 </div>
               </div>
             </div>
+            {/* AI Risk Explanation */}
+            <div
+              className="recommendation-box"
+              style={{ marginTop: '16px' }}
+            >
+              <div className="recommendation-title">
+                🤖 AI Risk Explanation
+              </div>
 
+              <div className="recommendation-desc">
+                {explanationLoading ? (
+                  <span>Generating risk explanation...</span>
+                ) : explanationError ? (
+                  <span style={{ color: '#fca5a5' }}>
+                    {explanationError}
+                  </span>
+                ) : riskExplanation ? (
+                  <div>
+                    <p>{riskExplanation.explanation}</p>
+
+                    <small style={{ color: 'var(--text-subtle)' }}>
+                      Source: {riskExplanation.source}
+                    </small>
+                  </div>
+                ) : (
+                  <span>
+                    Run a prediction to generate an AI risk explanation.
+                  </span>
+                )}
+              </div>
+            </div>
             {/* Feature Impact Card */}
             <div className="card">
               <div className="card-header">
